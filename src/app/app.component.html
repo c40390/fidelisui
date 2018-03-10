@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-2">
+      <h2>Filters</h2>
+      <table>
+        <th>Severity</th>
+        <tr class="borderLine">
+          <td><a (click)="showClickedStats($event)">High</a></td>
+          <td>{{high}}</td>
+        </tr>
+        <tr>
+          <td><a (click)="showClickedStats($event)">Medium</a></td>
+          <td>{{medium}}</td>
+        </tr>
+        <tr>
+          <td><a (click)="showClickedStats($event)">Low</a></td>
+          <td>{{low}}</td>
+        </tr>
+        <th>Protocol</th>
+        <tr class="borderLine">
+          <td><a (click)="showClickedStats($event)">SMTP</a></td>
+          <td>{{smtp}}</td>
+        </tr>
+        <tr>
+          <td><a (click)="showClickedStats($event)">HTTP</a></td>
+          <td>{{http}}</td>
+        </tr>
+        <tr>
+          <td><a (click)="showClickedStats($event)">FTP</a></td>
+          <td>{{ftp}}</td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div class="col-md-7 tableDiv">
+      <label>Alerts</label>
+      <input [(ngModel)]="searchText" placeholder="Enter Search Text">
+      <table>
+        <th class="bgGrey" *ngFor='let header of tempdata | keys'>{{header.key}}</th>
+        <tr class="masterTable" *ngFor="let data of alertData | filter:searchText; let i = index" (click)="getfulldetails(data)">
+          <td>
+            {{data.AlertId}}
+          </td>
+          <td>
+            {{data.AlertTime}}
+          </td>
+          <td [ngStyle]="{'color': data.Severity === 'High' ? 'red' : data.Severity === 'Medium' ? 'orange': 'lightgreen'}">
+            {{data.Severity}}
+          </td>
+          <td>
+            {{data.ClientIP}}
+          </td>
+          <td>
+            {{data.ServerIP}}
+          </td>
+          <td>
+            {{data.Protocol}}
+          </td>
+          <td>
+            {{data.ClientCountry}}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-3 ">
+      <h2>Alert Details</h2>
+      <div *ngIf="alertDataObj ">
+        <table>
+          <tr *ngFor='let key of alertDataObj | keys'>
+            <td> {{key.key}} </td>
+            <td> {{key.value}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
